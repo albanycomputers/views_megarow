@@ -27,7 +27,7 @@ function views_megarow_views_plugins() {
         'handler' => 'views_plugin_style_table_megarows',
         'theme' => 'views_view_table',
         'theme file' => 'theme.inc',
-        'theme path' => drupal_get_path('module', 'views') . '/theme',
+        'theme path' => backdrop_get_path('module', 'views') . '/theme',
         'uses row plugin' => TRUE,
         'uses row class' => TRUE,
         'uses fields' => TRUE,

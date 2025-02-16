@@ -20,12 +20,12 @@
     return this;
 
   };
-  Drupal.ViewsMegarow = Drupal.ViewsMegarow || {};
+  Backdrop.ViewsMegarow = Backdrop.ViewsMegarow || {};
 
   /**
    * Display the megarow.
    */
-  Drupal.ViewsMegarow.open = function(entityId, target) {
+  Backdrop.ViewsMegarow.open = function(entityId, target) {
     // If there's already a megarow opened for this entity, abort.
     var row_parent_megarow = $(target).parents('tr').next('tr.megarow');
     if (row_parent_megarow != undefined && row_parent_megarow.length > 0) {
@@ -39,13 +39,13 @@
       animationSpeed: 'fast'
     };
     var settings = {};
-    $.extend(true, settings, defaults, Drupal.settings.ViewsMegarow);
-    Drupal.ViewsMegarow.currentSettings = settings;
+    $.extend(true, settings, defaults, Backdrop.settings.ViewsMegarow);
+    Backdrop.ViewsMegarow.currentSettings = settings;
 
     // Get the megarow HTML, add the "Loading" title and animation.
-    var megarowContent = $(Drupal.theme(settings.megarowTheme, entityId));
-    $('.megarow-title', megarowContent).html(Drupal.ViewsMegarow.currentSettings.loadingText);
-    $('.megarow-content', megarowContent).html(Drupal.theme(settings.throbberTheme));
+    var megarowContent = $(Backdrop.theme(settings.megarowTheme, entityId));
+    $('.megarow-title', megarowContent).html(Backdrop.ViewsMegarow.currentSettings.loadingText);
+    $('.megarow-content', megarowContent).html(Backdrop.theme(settings.throbberTheme));
     megarowContent.hide();
 
     // Extract the width of the megarow.
@@ -78,7 +78,7 @@
 
     // Bind a click for closing the megarow.
     $('.close', megarow).bind('click', { entityId: entityId }, function(event) {
-      Drupal.ViewsMegarow.close(event.data.entityId, event.target);
+      Backdrop.ViewsMegarow.close(event.data.entityId, event.target);
       event.preventDefault();
     });
   };
@@ -86,18 +86,18 @@
   /**
    * Close the megarow.
    */
-  Drupal.ViewsMegarow.close = function(entityId, target) {
+  Backdrop.ViewsMegarow.close = function(entityId, target) {
     // Target the megarow of the triggering element
     // (submit button or close link).
     var megarow = $(target).parents('.views-megarow-content:first');
-    if (Drupal.ViewsMegarow.currentSettings.scrollEnabled) {
-      $(megarow).viewsMegarowGoTo(Drupal.ViewsMegarow.currentSettings.scrollPadding);
+    if (Backdrop.ViewsMegarow.currentSettings.scrollEnabled) {
+      $(megarow).viewsMegarowGoTo(Backdrop.ViewsMegarow.currentSettings.scrollPadding);
     }
     // Unbind the events.
     $(document).trigger('CToolsDetachBehaviors', megarow);
 
     // Set our animation parameters and use them.
-    var animation = Drupal.ViewsMegarow.currentSettings.animation;
+    var animation = Backdrop.ViewsMegarow.currentSettings.animation;
     if (animation == 'fadeIn') {
       animation = 'fadeOut';
     }
@@ -109,7 +109,7 @@
     }
 
     // Close and remove the megarow.
-    $(megarow).hide()[animation](Drupal.ViewsMegarow.currentSettings.animationSpeed);
+    $(megarow).hide()[animation](Backdrop.ViewsMegarow.currentSettings.animationSpeed);
     $(megarow).parents('tr:first').remove();
 
     // Mark the parent row as inactive.
@@ -119,12 +119,12 @@
   /**
    * Provide the HTML to create the megarow.
    */
-  Drupal.theme.prototype.ViewsMegarowDialog = function (entityId) {
+  Backdrop.theme.prototype.ViewsMegarowDialog = function (entityId) {
     var html = '';
     html += '<div>'; // This div doesn't get inserted into a DOM.
     html += '  <div class="megarow-header clearfix">';
     html += '    <span class="megarow-title"></span>';
-    html += '      <a class="close" href="#">' + Drupal.ViewsMegarow.currentSettings.close + '</a>';
+    html += '      <a class="close" href="#">' + Backdrop.ViewsMegarow.currentSettings.close + '</a>';
     html += '    </div>';
     html += '   <div class="megarow-content"></div>';
     html += '</div>';
@@ -134,11 +134,11 @@
   /**
    * Provide the HTML to create the throbber.
    */
-  Drupal.theme.prototype.ViewsMegarowThrobber = function () {
+  Backdrop.theme.prototype.ViewsMegarowThrobber = function () {
     var html = '';
     html += '  <div class="megarow-throbber">';
     html += '    <div class="megarow-throbber-wrapper">';
-    html +=        Drupal.ViewsMegarow.currentSettings.throbber;
+    html +=        Backdrop.ViewsMegarow.currentSettings.throbber;
     html += '    </div>';
     html += '  </div>';
 
@@ -148,14 +148,14 @@
   /**
    * Handler to prepare the megarow for the response
    */
-  Drupal.ViewsMegarow.clickAjaxLink = function () {
+  Backdrop.ViewsMegarow.clickAjaxLink = function () {
     var classes  = $(this).parents('tr').attr('class');
 
     // Extract the entity idem from a custom class storing it
     // to ease the manipulation of the rows.
     var entityId = /item\-([0-9]+)/.exec(classes)[1];
 
-    Drupal.ViewsMegarow.open(entityId, $(this));
+    Backdrop.ViewsMegarow.open(entityId, $(this));
 
     return false;
   };
@@ -163,14 +163,14 @@
   /**
    * Bind links that will open megarows to the appropriate function.
    */
-  Drupal.behaviors.ViewsMegarow = {
+  Backdrop.behaviors.ViewsMegarow = {
     attach: function(context) {
       // Bind links
       // Note that doing so in this order means that the two classes can be
       // used together safely.
       $('a.views-megarow-open:not(.views-megarow-open-processed)', context)
         .addClass('views-megarow-open-processed')
-        .click(Drupal.ViewsMegarow.clickAjaxLink)
+        .click(Backdrop.ViewsMegarow.clickAjaxLink)
         .each(function () {
           // Create a DOM attribute to ease the manipulation of the row
           // by any other module.
@@ -178,7 +178,7 @@
           var entityId = /item\-([0-9]+)/.exec(classes)[1];
           $(this).parents('tr').attr('data-entity-id', entityId);
 
-          // Create a drupal ajax object
+          // Create a backdrop ajax object
           var elementSettings = {};
           if ($(this).attr('href')) {
             elementSettings.url = $(this).attr('href');
@@ -186,7 +186,7 @@
             elementSettings.progress = { type: 'throbber' };
           }
           var base = $(this).attr('href');
-          Drupal.ajax[base] = new Drupal.ajax(base, this, elementSettings);
+          Backdrop.ajax[base] = new Backdrop.ajax(base, this, elementSettings);
         }
       );
 
@@ -200,11 +200,11 @@
           elementSettings.progress = { 'type': 'throbber' }
           var base = $(this).attr('id');
 
-          Drupal.ajax[base] = new Drupal.ajax(base, this, elementSettings);
-          Drupal.ajax[base].form = $(this);
+          Backdrop.ajax[base] = new Backdrop.ajax(base, this, elementSettings);
+          Backdrop.ajax[base].form = $(this);
 
           $('input[type=submit], button', this).click(function() {
-            Drupal.ajax[base].element = this;
+            Backdrop.ajax[base].element = this;
             this.form.clk = this;
           });
         });
@@ -214,7 +214,7 @@
   /**
    * AJAX command to place HTML within the megarow.
    */
-  Drupal.ViewsMegarow.megarow_display = function(ajax, response, status) {
+  Backdrop.ViewsMegarow.megarow_display = function(ajax, response, status) {
     var target = $(ajax.element).parents('.views-table');
     var megarow = $('.views-megarow-content-' + response.entity_id, target);
 
@@ -223,22 +223,22 @@
     // .html strips off <form> tag for version Jquery 1.7, using append instead.
     $('.megarow-content', megarow).html('');
     $('.megarow-content', megarow).append(response.output);
-    Drupal.attachBehaviors();
+    Backdrop.attachBehaviors();
   }
 
   /**
    * AJAX command to dismiss the megarow.
    */
-  Drupal.ViewsMegarow.megarow_dismiss = function(ajax, response, status) {
+  Backdrop.ViewsMegarow.megarow_dismiss = function(ajax, response, status) {
     // Close the megarow of the calling element
     // (form submit button or close link).
-    Drupal.ViewsMegarow.close(response.entity_id, ajax.element);
+    Backdrop.ViewsMegarow.close(response.entity_id, ajax.element);
   }
 
   /**
    * AJAX command to refresh the parent row of a megarow.
    */
-  Drupal.ViewsMegarow.megarow_refresh_parent = function(ajax, response, status) {
+  Backdrop.ViewsMegarow.megarow_refresh_parent = function(ajax, response, status) {
     // No row found, nothing to update.
     if ($('tr.item-' + response.entity_id).length == 0) {
       return;
@@ -247,22 +247,22 @@
     // Fetch the current page using ajax, and extract the relevant data.
     var table = $('tr.item-' + response.entity_id).parents('table');
     var viewName = table.attr('data-view-name');
-    var display = Drupal.settings.ViewsMegarow.display_id;
+    var display = Backdrop.settings.ViewsMegarow.display_id;
 
     // If we don't have a specify display defined extract it from our table.
     if (display === undefined) {
       display = table.attr('data-view-display');
     }
 
-    var url = Drupal.settings.basePath + 'views_megarow/refresh/' + viewName + '/' + display;
+    var url = Backdrop.settings.basePath + 'views_megarow/refresh/' + viewName + '/' + display;
 
     // Add arguments to the url if they have been passed in.
-    if (Drupal.settings.ViewsMegarow.args !== undefined) {
-      url += '/' + Drupal.settings.ViewsMegarow.args;
+    if (Backdrop.settings.ViewsMegarow.args !== undefined) {
+      url += '/' + Backdrop.settings.ViewsMegarow.args;
     }
 
     // Preserve initial destination URL query parameter.
-    url += '?destination=' + Drupal.ViewsMegarow.currentSettings.destination;
+    url += '?destination=' + Backdrop.ViewsMegarow.currentSettings.destination;
 
     $.get(url, function(data) {
       $('tr.item-' + response.entity_id + ' td', data).each(function(index) {
@@ -271,15 +271,15 @@
           var targetElement = $('tr.item-' + response.entity_id + ' td:eq(' + index + ')');
           var newContent = $(this).html();
           targetElement.html(newContent);
-          Drupal.attachBehaviors(targetElement);
+          Backdrop.attachBehaviors(targetElement);
         }
       });
     });
   }
 
   $(function() {
-    Drupal.ajax.prototype.commands.megarow_display = Drupal.ViewsMegarow.megarow_display;
-    Drupal.ajax.prototype.commands.megarow_dismiss = Drupal.ViewsMegarow.megarow_dismiss;
-    Drupal.ajax.prototype.commands.megarow_refresh_parent = Drupal.ViewsMegarow.megarow_refresh_parent;
+    Backdrop.ajax.prototype.commands.megarow_display = Backdrop.ViewsMegarow.megarow_display;
+    Backdrop.ajax.prototype.commands.megarow_dismiss = Backdrop.ViewsMegarow.megarow_dismiss;
+    Backdrop.ajax.prototype.commands.megarow_refresh_parent = Backdrop.ViewsMegarow.megarow_refresh_parent;
   });
 })(jQuery);

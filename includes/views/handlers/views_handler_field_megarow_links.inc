@@ -34,24 +34,24 @@ class views_handler_field_megarow_links extends views_handler_field {
     // Token item.
     if (module_exists('token')) {
       // Add token module replacements fields
-        $form['megarow']['tokens'] = array(
-          '#type' => 'fieldset',
-          '#collapsible' => TRUE,
-          '#collapsed' => TRUE,
-          '#title' => t('Placeholder tokens'),
-          '#description' => t("The following placeholder tokens can be used in the edit, preview and revisions links. When used in a path they will be replaced with the appropriate values."),
-        );
-        $token_type = array(
-          'theme' => 'token_tree',
-          'token_types' => array($this->getTokenType()),
-          'global_types' => TRUE,
-          'click_insert' => TRUE,
-          'dialog' => TRUE,
-        );
-        $form['megarow']['tokens']['help'] = array(
-          '#type' => 'markup',
-          '#markup' => theme('token_tree', $token_type),
-        );
+      $form['megarow']['tokens'] = array(
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#title' => t('Placeholder tokens'),
+        '#description' => t("The following placeholder tokens can be used in the edit, preview and revisions links. When used in a path they will be replaced with the appropriate values."),
+      );
+      $token_type = array(
+        'theme' => 'token_tree',
+        'token_types' => array($this->getTokenType()),
+        'global_types' => TRUE,
+        'click_insert' => TRUE,
+        'dialog' => TRUE,
+      );
+      $form['megarow']['tokens']['help'] = array(
+        '#type' => 'markup',
+        '#markup' => theme('token_tree', $token_type),
+      );
     }
   }
 

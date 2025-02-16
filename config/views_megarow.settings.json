@@ -1,0 +1,6 @@
+{
+    "_config_name": "views_megarow.settings",
+    "views_megarow_title": "Megarow content",
+    "views_megarow_override_node_edit": true,
+    "views_megarow_override_user_edit": true
+}

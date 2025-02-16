@@ -43,7 +43,7 @@ class views_plugin_style_table_megarows extends views_plugin_style_table {
       '#states' => array(
         'visible' => array(
           ':input[name="style_options[megarow][enable_scroll]"]' => array('checked' => TRUE),
-        )
+        ),
       ),
     );
     $form['megarow']['loading_text'] = array(
@@ -68,11 +68,23 @@ class views_plugin_style_table_megarows extends views_plugin_style_table {
   function option_definition() {
     $options = parent::option_definition();
 
-    $options['autoclose'] = array('default' => FALSE, 'bool' => TRUE);
-    $options['enable_scroll'] = array('default' => TRUE, 'bool' => TRUE);
+    $options['autoclose'] = array(
+      'default' => FALSE,
+      'bool' => TRUE,
+    );
+    $options['enable_scroll'] = array(
+      'default' => TRUE,
+      'bool' => TRUE,
+    );
     $options['scroll_padding'] = array('default' => 120);
-    $options['loading_text'] = array('default' => 'Loading...', 'translatable' => TRUE);
-    $options['close'] = array('default' => 'x', 'translatable' => TRUE);
+    $options['loading_text'] = array(
+      'default' => 'Loading...',
+      'translatable' => TRUE,
+    );
+    $options['close'] = array(
+      'default' => 'x',
+      'translatable' => TRUE,
+    );
 
     return $options;
   }
