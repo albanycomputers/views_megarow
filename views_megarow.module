@@ -236,9 +236,6 @@ function views_megarow_views_pre_render(&$view) {
     backdrop_add_library('system', 'backdrop.ajax');
     backdrop_add_js(backdrop_get_path('module', 'views_megarow') . "/views_megarow.js");
     backdrop_add_css(backdrop_get_path('module', 'views_megarow') . "/views_megarow.css");
-    // Add the Views dropbutton CSS so that links provided by
-    // views_handler_field_megarow_links are styled properly.
-    // @todo Remove this once http://drupal.org/node/1557662 gets committed.
     backdrop_add_css(backdrop_get_path('module', 'views') . '/css/views-admin.ctools.css');
     backdrop_add_css(backdrop_get_path('module', 'views') . '/css/views-admin.seven.css');
 
@@ -568,4 +565,22 @@ function views_megarow_autoload_info() {
     'views_handler_field_megarow_links' => 'includes/views/handlers/views_handler_field_megarow_links.inc',
     'views_plugin_style_table_megarows' => 'includes/views/plugins/views_plugin_style_table_megarows.inc',
   );
+}
+
+
+/**
+ * Implements hook_autoload_info().
+ */
+function commerce_cart_autoload_info() {
+  return [
+    'commerce_cart_handler_area_empty_text' => 'includes/views/handlers/commerce_cart_handler_area_empty_text.inc',
+    'commerce_cart_handler_field_add_to_cart_form' => 'includes/views/handlers/commerce_cart_handler_field_add_to_cart_form.inc',
+    'commerce_cart_handler_field_edit_attributes' => 'includes/views/handlers/commerce_cart_handler_field_edit_attributes.inc',
+    'commerce_cart_plugin_argument_default_current_cart_order_id' => 'includes/views/handlers/commerce_cart_plugin_argument_default_current_cart_order_id.inc',
+    'commerce_cart.views'=> 'includes/views/commerce_cart.views.inc',
+    'commerce_cart.views_default'=> 'includes/views/commerce_cart.views_default.inc',
+    'CommerceCartProviderSession' => 'plugins/cart_provider/CommerceCartProviderSession.class.php',
+    'CommerceCartProviderInterface' => 'plugins/cart_provider/interface.inc',
+    'session' => 'plugins/cart_provider/session.inc',
+  ];
 }

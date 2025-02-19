@@ -45,6 +45,5 @@ function views_megarow_admin_settings_form($form, &$form_state) {
  */
 function views_megarow_settings_submit() {
   // Rebuild the menu cache in order to take into account the new configuration.
-  // TODO This variable was probably removed in Backdrop without replacement.
-  variable_set('menu_rebuild_needed', TRUE);
+  state_set('menu_rebuild_needed', TRUE);
 }
