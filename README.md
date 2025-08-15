@@ -31,7 +31,7 @@ Install this module using the official Backdrop CMS instructions at https://docs
 3. Add a "Megarow links" field
 4. In this field enter one megarow link per line, the structure of a link is the link title and its path joined with a pipe sign (|) (eg: Preview|node/1).
 5. Save your view and display your table
-6. When you will click on a link, Drupal will load what's behind this page and will render it as the megarow content below the current result of the view.
+6. When you will click on a link, Backdrop will load what's behind this page and will render it as the megarow content below the current result of the view.
 
 Views megarow has been designed to let you render forms in the megarow, meaning that you can have validation functions that will block the form submission and once the form is properly submitted the line of results can be refreshed to display the new values.
 
